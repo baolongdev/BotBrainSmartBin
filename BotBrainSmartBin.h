@@ -14,14 +14,13 @@ private:
   int closePosition;     // Position of the servo when the bin is closed
 
   unsigned long previousMicros; // Previous time for interval tracking
-  int interval = 15000;  // 15 milliseconds in microseconds
-  bool check = false;
+  int interval; 
 
   void moveServoTo(int position);
   float ultrasonicMeasure();
 
 public:
-  BotBrainSmartBin(int servoPin, int triggerPin, int echoPin, int openPos = 100, int closePos = 0, int interval = 0);
+  BotBrainSmartBin(int servoPin, int triggerPin, int echoPin, int openPos = 100, int closePos = 0, int interval = 15000);
   // Setup function to initialize smart bin
   void setupAllSmartBin(int servoPin, int triggerPin, int echoPin);
 
@@ -31,6 +30,8 @@ public:
 
   // Function to get distance from ultrasonic sensor
   float getDistance();
+
+  bool timeToUpdate();
 };
 
 #endif  // BotBrainSmartBin_H

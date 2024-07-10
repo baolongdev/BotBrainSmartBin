@@ -7,8 +7,6 @@ const int TRIGGER_PIN = 7;
 const int ECHO_PIN = 6;
 // const int openPosition;
 // const int closePosition;
-unsigned long previousMicros;
-const int interval = 15000;
 bool flash = true;  //MoThungRac();
 
 // Create an instance of the BotBrainSmartBin class
@@ -21,13 +19,10 @@ void setup() {
 }
 
 void loop() {
-  // Get the current time in microseconds
-  unsigned long currentMicros = micros();
   // Call getDistance to get the distance from the ultrasonic sensor
   float distance = smartBin.getDistance();
-  if (currentMicros - previousMicros >= interval) {
-    previousMicros = currentMicros;
-    Serial.println(distance);
+  if (smartBin.timeToUpdate()) {
+    // Serial.println(distance);
     if (distance < 15 && flash) {
       smartBin.MoThungRac();  // Open the bin lid
       flash = false;          // Update the check flag

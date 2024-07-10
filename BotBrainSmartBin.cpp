@@ -23,13 +23,13 @@ void BotBrainSmartBin::DongThungRac() {
 }
 
 float BotBrainSmartBin::getDistance() {
-  float filterArray[20]; // array to store data samples from sensor
-  float distance; // store the distance from sensor
+  float filterArray[20];  // array to store data samples from sensor
+  float distance;         // store the distance from sensor
 
   // 1. Taking multiple measurements and storing in an array
   for (int sample = 0; sample < 20; sample++) {
     filterArray[sample] = ultrasonicMeasure();
-    delay(30); // to avoid ultrasonic interference
+    delay(30);  // to avoid ultrasonic interference
   }
 
   // 2. Sorting the array in ascending order
@@ -71,4 +71,13 @@ float BotBrainSmartBin::ultrasonicMeasure() {
 
 void BotBrainSmartBin::moveServoTo(int position) {
   myservo.write(position);
+}
+
+bool timeToUpdate() {
+  unsigned long currentMicros = micros();
+  if (currentMicros - previousMicros >= interval) {
+    previousMicros = currentMicros;
+    return true;
+  }
+  return false;
 }
