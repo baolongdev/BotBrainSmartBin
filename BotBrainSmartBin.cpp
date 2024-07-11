@@ -2,7 +2,7 @@
 #include <Arduino.h>
 
 BotBrainSmartBin::BotBrainSmartBin(int servoPin, int triggerPin, int echoPin, int openPos, int closePos, int interval)
-  : servoPin(servoPin), pingPin(triggerPin), echoPin(echoPin), openPosition(openPos), closePosition(closePos), interval(interval) {
+  : servoPin(servoPin), pingPin(triggerPin), echoPin(echoPin), openPosition(openPos), closePosition(closePos), interval(interval), previousMicros(0) {
 }
 
 void BotBrainSmartBin::setupAllSmartBin(int servoPin, int triggerPin, int echoPin) {
@@ -73,7 +73,7 @@ void BotBrainSmartBin::moveServoTo(int position) {
   myservo.write(position);
 }
 
-bool timeToUpdate() {
+bool BotBrainSmartBin::timeToUpdate() {
   unsigned long currentMicros = micros();
   if (currentMicros - previousMicros >= interval) {
     previousMicros = currentMicros;
